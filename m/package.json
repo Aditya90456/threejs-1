@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-     "dev": "vite --port 5174",
-    "three":"postcss -i ./src/style.css -o ./style.css --watch",
+    "dev": "vite --port 5174",
+    "three": "postcss -i ./src/style.css -o ./style.css --watch",
     "build": "vite build",
     "preview": "vite preview"
   },

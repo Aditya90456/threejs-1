@@ -10,7 +10,7 @@ scene.add(light)
  
 const textureLoader = new THREE.TextureLoader()
 const texture = textureLoader.load('/e.jpg')
-
+texture.colorSpace = THREE.SRGBColorSpace
 const geometry = new THREE.SphereGeometry(1, 20, 20)
 const material = new THREE.MeshPhysicalMaterial({
   map: texture, 
