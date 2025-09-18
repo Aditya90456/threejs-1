@@ -1,30 +1,37 @@
- import * as THREE from 'three'
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+const scene = new THREE.Scene();
 
-const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100)
-camera.position.z = 3
+      // Camera set kiya
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      camera.position.z = 5;
 
-const light = new THREE.DirectionalLight("white",3)
-light.position.set(2,2,2)
-scene.add(light)
- 
-const textureLoader = new THREE.TextureLoader()
-const texture = textureLoader.load('/e.jpg')
-texture.colorSpace = THREE.SRGBColorSpace
-const geometry = new THREE.SphereGeometry(1, 20, 20)
-const material = new THREE.MeshPhysicalMaterial({
-  map: texture, 
-})
-const earth = new THREE.Mesh(geometry, material)
-scene.add(earth)
-earth.rotation.y =1
+      // Renderer setup
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('canvas') })
-renderer.setSize(window.innerWidth, window.innerHeight)
+      // Ek cube add kiya
+      const geometry = new THREE.BoxGeometry();
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+      const cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
 
-function animate() {
-  requestAnimationFrame(animate)
-  earth.rotation.y += 0.002
-  renderer.render(scene, camera)
-}
-animate()
+      // Axis helper (X = red, Y = green, Z = blue) 
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; // Damping effect
+controls.minAzimuthAngle = -Math.PI / 4; // Minimum horizontal angle
+controls.maxAzimuthAngle = Math.PI / 4;
+
+      // Animation loop
+      function animate() { 
+    requestAnimationFrame(animate);
+        controls.update(); // Update controls
+    renderer.render(scene, camera);
+      }
+      animate();
